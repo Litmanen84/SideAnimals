@@ -1,0 +1,25 @@
+
+
+@if (pets.isLoading()) {
+  <p class="text-muted">Loading pets...</p>
+} @else if (pets.error()) {
+  <p class="alert alert-danger">Oops, could not load the pets. Is the backend running?</p>
+} @else {
+  <div class="container-fluid">
+    <div class="row">
+      <div id="gallery" class="col-md-9">
+        <div class="gallery">
+          <div class="gallery-pet fader">
+            @for (pet of pets.value(); track pet.id) {
+              <img class="profile-picture" [src]="backendUrl + '/' + pet.image" alt="No image has been found" />
+              <div class="overlay-text">{{ pet.name }}</div>
+<!--              <div class="overlay">-->
+<!--                <div class="overlay-text">pet.name</div>-->
+<!--              </div>-->
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
