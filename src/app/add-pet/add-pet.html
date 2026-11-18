@@ -1,0 +1,13 @@
+<section class="tiny-dialog">
+  <form [formRoot]="petForm">
+    <input type="text" class="form-control"
+           placeholder="Name" [formField]="petForm.name" />
+    <input type="text" class="form-control"
+           placeholder="Kind" [formField]="petForm.kind" />
+    <input type="text" class="form-control"
+           placeholder="Image Url" [formField]="petForm.image" />
+    <input type="text" class="form-control"
+           placeholder="Profile Text" [formField]="petForm.profileText" />
+    <button type="submit">{{ petForm().submitting() ? 'Sending this shit...' : 'Add this idiot pet via this stupid form. Angular sucks. I hate it.' }}</button>
+  </form>
+</section>

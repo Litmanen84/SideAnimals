@@ -2,6 +2,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pet } from '../model/pet';
 import { ProfileGallery } from './profile-gallery';
+import {signal, WritableSignal} from '@angular/core';
 
 describe('ProfileGallery', () => {
   let component: ProfileGallery;
@@ -60,4 +61,54 @@ describe('ProfileGallery', () => {
 
     expect(gallery.textContent).toContain('could not load the pets');
   });
+
+  it('should show the filtered pets', async () => {
+    const pets: Pet[] = [
+      {
+        id: 1,
+        name: 'Princess',
+        kind: 'chicken',
+        image: 'images/chicken1.jpg',
+        profileText: 'test',
+        popularity: 0,
+      },
+    ]
+    httpTesting.expectOne('http://localhost:8080/pets').flush(pets);
+    await fixture.whenStable();
+
+    component.searchText.set('PRIN');
+    expect(component.filteredPets()).toEqual([pets[0]]);
+  })
+
+  it('should toggle the pet selection', async () =>{
+    const pets: Pet[] = [
+      {
+        id: 1,
+        name: 'Princess',
+        kind: 'chicken',
+        image: 'images/chicken1.jpg',
+        profileText: 'She loves sunflower seeds',
+        popularity: 0,
+      },
+    ];
+
+    httpTesting.expectOne('http://localhost:8080/pets').flush(pets);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const gallery = fixture.nativeElement as HTMLElement;
+    const petItem = gallery.querySelector('.gallery-pet') as HTMLElement;
+
+    petItem.click();
+    fixture.detectChanges();
+
+    expect(petItem.classList).toContain('active');
+    expect(gallery.textContent).toContain('She loves sunflower seeds');
+
+    petItem.click();
+    fixture.detectChanges();
+
+    expect(petItem.classList).not.toContain('active');
+    expect(gallery.textContent).not.toContain('She loves sunflower seeds');
+  })
 });

@@ -1,24 +1,40 @@
-
-
 @if (pets.isLoading()) {
   <p class="text-muted">Loading pets...</p>
 } @else if (pets.error()) {
   <p class="alert alert-danger">Oops, could not load the pets. Is the backend running?</p>
 } @else {
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
-      <div id="gallery" class="col-md-9">
-        <div class="gallery">
-          <div class="gallery-pet fader">
-            @for (pet of pets.value(); track pet.id) {
-              <img class="profile-picture" [src]="backendUrl + '/' + pet.image" alt="No image has been found" />
-              <div class="overlay-text">{{ pet.name }}</div>
-<!--              <div class="overlay">-->
-<!--                <div class="overlay-text">pet.name</div>-->
-<!--              </div>-->
-            }
+
+      <!-- Colonna sinistra: galleria -->
+      <div id="gallery" class="col-md-9 gallery">
+        @for (pet of filteredPets(); track pet.id) {
+          <div class="gallery-pet"
+               (click)="selectPet(pet)"
+               [class.active]="selectedPet()?.id === pet.id">
+            <img class="profile-picture"
+                 [src]="backendUrl + '/' + pet.image"
+                 alt="No image has been found" />
+            <div class="overlay-text">{{ pet.name }}</div>
           </div>
-        </div>
+        }
+      </div>
+
+      <!-- Colonna destra: ricerca, dettaglio, aggiunta -->
+      <div class="col-md-3 gallery-detail">
+        <section class="tiny-dialog">
+          <h3>Find your pet</h3>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" class="form-control"
+                   placeholder="Name" [(ngModel)]="searchText" />
+          </div>
+        </section>
+
+        @if (selectedPet(); as pet) {
+          <app-pet-profile [pet]="pet" />
+        }
+          <app-add-pet (petAdded) = "showNewPet()"/>
       </div>
     </div>
   </div>

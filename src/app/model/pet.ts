@@ -1,8 +1,8 @@
 export interface Pet {
-  id: number;
+  id?: number;
   name: string;
   kind: string;
   image: string;
   profileText: string;
-  popularity: number;
+  popularity?: number;
 }

@@ -24,7 +24,6 @@ describe('PetService', () => {
     // given
     const petsResult: Pet[] = [
       {
-        id: 1,
         name: 'test 1',
         kind: 'cat',
         image: 'images/test_1.jpg',
@@ -32,7 +31,6 @@ describe('PetService', () => {
         popularity: 1,
       },
       {
-        id: 2,
         name: 'test 2',
         kind: 'dog',
         image: 'images/test_2.jpg',
@@ -49,5 +47,36 @@ describe('PetService', () => {
     expect(request.request.method).toBe('GET');
     request.flush(petsResult);
     expect(await pets).toEqual(petsResult);
+  });
+
+  it('should get the pets from the backend in an ordered list', async () => {
+    // given
+    const petsDB: Pet[] = [
+      {
+        name: 'Vitello',
+        kind: 'cat',
+        image: 'images/test_1.jpg',
+        profileText: 'test',
+        popularity: 1,
+      },
+      {
+        name: 'test 2',
+        kind: 'dog',
+        image: 'images/test_2.jpg',
+        profileText: 'test',
+        popularity: 2,
+      },
+    ];
+
+    const petsResult: string[] = ['test 2', 'Vitello'];
+
+    // when
+    const pets = firstValueFrom(service.getPets());
+
+    // then
+    const request = httpTesting.expectOne('http://localhost:8080/pets');
+    expect(request.request.method).toBe('GET');
+    request.flush(petsDB);
+    expect((await pets).map(pet => pet.name)).toEqual(petsResult);
   });
 });
