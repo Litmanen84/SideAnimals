@@ -1,13 +1,42 @@
 <section class="tiny-dialog">
   <form [formRoot]="petForm">
-    <input type="text" class="form-control"
-           placeholder="Name" [formField]="petForm.name" />
-    <input type="text" class="form-control"
-           placeholder="Kind" [formField]="petForm.kind" />
-    <input type="text" class="form-control"
-           placeholder="Image Url" [formField]="petForm.image" />
-    <input type="text" class="form-control"
-           placeholder="Profile Text" [formField]="petForm.profileText" />
+    <div class="form-group"
+         [class.has-error]="petForm.name().touched() && petForm.name().invalid()">
+      <input type="text" class="form-control"
+             placeholder="Name" [formField]="petForm.name" />
+      @if (petForm.name().touched()) {
+        @for (error of petForm.name().errors(); track error) {
+          <p class="alert alert-danger">{{ error.message }}</p>
+        }
+      }
+    </div>
+    <div class="form-group" [class.has-error] = "petForm.kind().touched() && petForm.kind().invalid()">
+      <input type="text" class="form-control"
+             placeholder="Kind" [formField]="petForm.kind" />
+      @if (petForm.kind().touched()) {
+        @for (error of petForm.kind().errors(); track error) {
+          <p class="alert alert-danger">{{ error.message }}</p>
+        }
+      }
+    </div>
+    <div class="form-group" [class.has-error] = "petForm.image().touched() && petForm.image().invalid()">
+      <input type="text" class="form-control"
+             placeholder="Image Url" [formField]="petForm.image" />
+      @if (petForm.image().touched()) {
+        @for (error of petForm.image().errors(); track error) {
+          <p class="alert alert-danger">{{ error.message }}</p>
+        }
+      }
+    </div>
+    <div class="form-group" [class.has-error] = "petForm.profileText().touched() && petForm.profileText().invalid()">
+      <input type="text" class="form-control"
+             placeholder="Profile Text" [formField]="petForm.profileText" />
+      @if (petForm.profileText().touched()) {
+        @for (error of petForm.profileText().errors(); track error) {
+          <p class="alert alert-danger">{{ error.message }}</p>
+        }
+      }
+    </div>
     <button type="submit">{{ petForm().submitting() ? 'Sending this shit...' : 'Add this idiot pet via this stupid form. Angular sucks. I hate it.' }}</button>
   </form>
 </section>

@@ -34,7 +34,7 @@
         @if (selectedPet(); as pet) {
           <app-pet-profile [pet]="pet" />
         }
-          <app-add-pet (petAdded) = "showNewPet()"/>
+          <app-add-pet (petAdded)="showNewPet($event)"/>
       </div>
     </div>
   </div>

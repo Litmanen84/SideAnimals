@@ -40,8 +40,8 @@ export class ProfileGallery {
     );
   }
 
-  protected showNewPet() {
+  protected showNewPet(pet : Pet) {
     this.pets.reload();
+    this.selectedPet.set(pet);
   }
-
 }
