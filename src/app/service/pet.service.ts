@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import {Service, Signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { inject } from '@angular/core';
 import {environment} from '../../environments/environment';
@@ -16,6 +16,10 @@ export class PetService {
 
   addPet(pet : Pet) : Observable<Pet> {
     return this.http.post<Pet>(this.petsUrl, pet);
+  }
+
+  getPet(name : string) : Observable<Pet> {
+    return this.http.get<Pet>(`${this.petsUrl}/${encodeURIComponent(name)}`);
   }
 }
 

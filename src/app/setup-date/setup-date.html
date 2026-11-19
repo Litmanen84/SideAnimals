@@ -1,0 +1,28 @@
+@if (pet.isLoading()) {
+  <p class="text-muted">Loading pet...</p>
+} @else if (pet.error()) {
+  <p class="alert alert-danger">Oops, could not load the pet. Is the backend running?</p>
+} @else {
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="big-dialog">
+          <div class="clearfix">
+            @if (pet.hasValue()) {
+            <div class="pull-left dialog-picture">
+<!--              <img class="small-profile-picture" ngSrc= "{{ imageUrl() }}" width="300" height="600" alt="No image has been found" />-->
+              <img class="small-profile-picture" [src]="backendUrl + '/' + pet.value().image" alt="No image has been found" />
+            </div>
+
+            <h3>{{ pet.value().name }}</h3>
+            <p>{{ pet.value().profileText}}</p>
+            <div class="clearfix">
+              <a class="btn btn-default" routerLink=''> Back to the gallery </a>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

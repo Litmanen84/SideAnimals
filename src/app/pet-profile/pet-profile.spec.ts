@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PetProfile } from './pet-profile';
 import {Pet} from '../model/pet';
+import {provideRouter} from '@angular/router';
+import {SetupDate} from '../setup-date/setup-date';
 
 describe('PetProfile', () => {
   let component: PetProfile;
@@ -9,6 +11,7 @@ describe('PetProfile', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PetProfile],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     const pet: Pet =

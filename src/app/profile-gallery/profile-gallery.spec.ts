@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Pet } from '../model/pet';
 import { ProfileGallery } from './profile-gallery';
 import {signal, WritableSignal} from '@angular/core';
+import {provideRouter} from '@angular/router';
 
 describe('ProfileGallery', () => {
   let component: ProfileGallery;
@@ -12,7 +13,7 @@ describe('ProfileGallery', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProfileGallery],
-      providers: [provideHttpClientTesting()],
+      providers: [provideHttpClientTesting(), provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileGallery);
@@ -37,7 +38,7 @@ describe('ProfileGallery', () => {
         name: 'Princess',
         kind: 'chicken',
         image: 'images/chicken1.jpg',
-        profileText: 'test',
+        profileText: 'testuggine',
         popularity: 0,
       },
     ];

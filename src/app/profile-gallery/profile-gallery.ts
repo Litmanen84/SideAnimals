@@ -23,8 +23,6 @@ export class ProfileGallery {
     defaultValue: [],
   });
 
-
-
   readonly filteredPets: Signal<Pet[]> = computed(() => {
     const search = this.searchText().trim().toLowerCase();
     return this.pets.value().filter(pet =>
